@@ -1,0 +1,37 @@
+{
+  "name": "react-native-device-wallpaper",
+  "version": "1.0.0",
+  "description": "Set device's wallpaper with react-native",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanamd/react-native-device-wallpaper"
+  },
+  "scripts": {
+    "build": "babel src -d lib/ && flow-copy-source src lib",
+    "prepublish": "yarn run build"
+  },
+  "keywords": [
+    "react-native",
+    "android",
+    "wallpaper",
+    "device"
+  ],
+  "author": "Juan Story",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": ">=0.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.1.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "flow-bin": "^0.120.1",
+    "flow-copy-source": "^2.0.7"
+  },
+  "dependencies": {}
+}
