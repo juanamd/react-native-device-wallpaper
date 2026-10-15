@@ -1,20 +1,64 @@
-apply plugin: 'com.android.library'
+buildscript {
+	// Fallbacks for when the host app doesn't define these in its root `ext`
+	ext.DeviceWallpaper = [
+		kotlinVersion      : "2.1.20",
+		minSdkVersion      : 24,
+		compileSdkVersion  : 36,
+		targetSdkVersion   : 36
+	]
 
-def DEFAULT_BUILD_TOOLS_VERSION = "28.0.3"
-def DEFAULT_COMPILE_SDK_VERSION = 28
-def DEFAULT_TARGET_SDK_VERSION = 28
+	ext.getExtOrDefault = { prop ->
+		return rootProject.ext.has(prop) ? rootProject.ext.get(prop) : ext.DeviceWallpaper[prop]
+	}
 
-android {
-	compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
-	buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
-	defaultConfig {
-		minSdkVersion 16
-		targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
-		versionCode 1
-		versionName "1.0"
+	repositories {
+		google()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath "com.android.tools.build:gradle:8.9.2"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
 	}
 }
 
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+android {
+	namespace "os.juanamd.devicewallpaper"
+
+	compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+	defaultConfig {
+		minSdkVersion getExtOrDefault("minSdkVersion")
+		targetSdkVersion getExtOrDefault("targetSdkVersion")
+	}
+
+	buildFeatures {
+		buildConfig true
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+
+	kotlinOptions {
+		jvmTarget = "17"
+	}
+
+	lint {
+		disable "GradleCompatible"
+	}
+}
+
+repositories {
+	mavenCentral()
+	google()
+}
+
 dependencies {
-	implementation 'com.facebook.react:react-native:+'
+	implementation "com.facebook.react:react-android"
 }
